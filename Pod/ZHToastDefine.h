@@ -9,9 +9,8 @@
 #ifndef ZHToastDefine_h
 #define ZHToastDefine_h
 
-#pragma mark - 读片读取
+#pragma mark - Bundle名称
 
-#define    ZHToastBundleName                        @"ZHToastUI"
-#define    ZHToastBundleImage(name)                 [UIImage imageNamed:[NSString stringWithFormat:@"%@.bundle/%@",ZHToastBundleName,name]]
+#define    ZHToastBundleName                        @"ZHToastKit"
 
 #endif /* ZHToastDefine_h */

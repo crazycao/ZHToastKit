@@ -31,12 +31,14 @@
 
 + (void)showError:(NSString *)error toView:(UIView *)view
 {
-    [self show:error icon:ZHToastBundleImage(@"mb_error") view:view afterDelay:1.5f];
+    UIImage *image = [self.class zhToastBundleImageWithName:@"mb_error"];
+    [self show:error icon:image view:view afterDelay:1.5f];
 }
 
 + (void)showSuccess:(NSString *)success toView:(UIView *)view
 {
-    [self show:success icon:ZHToastBundleImage(@"mb_success") view:view afterDelay:1.5f];
+    UIImage *image = [self.class zhToastBundleImageWithName:@"mb_success"];
+    [self show:success icon:image view:view afterDelay:1.5f];
 }
 
 + (void)show:(NSString*)text icon:(UIImage *)icon view:(UIView*)view afterDelay:(NSTimeInterval)delay
@@ -46,6 +48,17 @@
     }
     [self.class hideHud:view];
     [MBProgressHUD zh_showToastForView:view withIcon:icon andText:text afterDelay:delay];
+}
+
++ (UIImage *)zhToastBundleImageWithName:(NSString *)name {
+    NSString *mainBundlePath = [NSBundle mainBundle].bundlePath;
+    NSString *bundlePath = [NSString stringWithFormat:@"%@/Frameworks/%@.framework/%@.bundle", mainBundlePath, ZHToastBundleName, ZHToastBundleName];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    if ([UIImage respondsToSelector:@selector(imageNamed:inBundle:compatibleWithTraitCollection:)]) {
+        return [UIImage imageNamed:name inBundle:bundle compatibleWithTraitCollection:nil];
+    } else {
+        return [UIImage imageWithContentsOfFile:[bundle pathForResource:name ofType:@"png"]];
+    }
 }
 
 #pragma mark - 显示提示框
